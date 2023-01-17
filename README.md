@@ -35,6 +35,7 @@ Unfortunately the model currently doesnt have access to a data base to store the
 ## Updates
 
 Jul 16 - wrote ConversationQueue.ts to give the ai context memory on previous prompts. Prompts will be fed into a tokenizer to keep track of the number of tokens being sent in a message, the queue sets a limit based on model which will be selectable in the ui, also TODO, using that limit it keeps a record of previous prompts that it sends with new prompts to give the api model context of what was previously said. As we approach the token limit the oldest prompts fall off till we are below the limit threshold minus whatever room you decide to leave for the response. This comes at a fairly hefty token cost since you're basically running the api at max tokens every prompt so use with caution. Once I get this side of the convo working correctly I'll pull the token value out of the response object and add the ai's responses to the context so that it can continue on lengthy code blocks or explanations.
+Jul 16 - created a tokenizer
 
 
 Jan 15 - initial commit, basic chat functionality, wrote readme and documented code.
@@ -42,40 +43,41 @@ Jan 15 - initial commit, basic chat functionality, wrote readme and documented c
 
 ## TODO
 
- **Context Queue**
-      write context queue
-      build tokenizer
-      link prompts to tokenizer and pass token values into the context queue
-      create functionality in context queue for ai's responses
-      pull token values from response object
-      pass ai response and token values into context queue
- **UI**
-      add controls for model, engine, Temp, TopP, frequencyPenalty, presencePenalty, stop values and max tokens
-      add viewing window for ai images
- **Tokenizer**
-      build tokenizer
-      link it to context queue
- **Multi User**
- **Multi Room**
- **UI Visuals**
- **Pre-Prompt Creation and Selection**
- **Inquire About Database Link Up**
+
+-**Context Queue**
+-- ~~write context queue~~
+-  ~~build tokenizer~~
+-- link prompts to tokenizer and pass token values into the context queue
+-- create functionality in context queue for ai's responses
+-- pull token values from response object
+-- pass ai response and token values into context queue
+- **UI**
+-- add controls for model, engine, Temp, TopP, frequencyPenalty, presencePenalty, stop values and max tokens
+-- add viewing window for ai images
+- **Tokenizer**
+-- ~~build tokenizer~~
+-- link it to context queue
+- **Multi User**
+- **Multi Room**
+- **UI Visuals**
+- **Pre-Prompt Creation and Selection**
+- **Inquire About Database Link Up**
 
 ## Long Term
- **Create NLP Model for Interface**
-      create tokenizer
-      collect data
-      tokenize and annotate data
-      create training neural network
-      create full training pipeline
-      train model
-      tune model
-      deploy
-      profit?
+- **Create NLP Model for Interface**
+--      create tokenizer
+--      collect data
+--      tokenize and annotate data
+--      create training neural network
+--      create full training pipeline
+--      train model
+--      tune model
+--      deploy
+--      profit?
 
 ## Collaboration
 
-If anyone wants to help with this project I definitely could use the assistance. The AI is great at helping me figure out the bits I'm missing from the knowledge base but I need the raw coding power. Getting it to produce accurate code in anything over a single page requires a lot of prompt engineering and for something more complex is generally not worth the time with out a more refined process(working on it). You can contact me at bakobiibizo@gmail.com. I'll have a website/blog thing up soon like to keep up to date. 
+If anyone wants to help with this project I definitely could use the assistance. The AI is great at helping me figure out the bits I'm missing from the knowledge base but I need the raw coding power. Getting it to produce accurate code in anything over a single page requires a lot of prompt engineering and for something more complex is generally not worth the time with out a more refined process(working on it). You can contact me at bakobiibizo@gmail.com. I'll have a website/blog thing up soon like to keep up to date.
 
 
 ### Original open-ai README.md
