@@ -76,66 +76,65 @@ const handleSubmit = async (event: any) => {
   event.preventDefault();
 
 
-    let data = new FormData(form);
+  let data = new FormData(form);
 
-    const uniqueId = generateUniqueId();
-
-
-    //user's chatstripe
+  const uniqueId = generateUniqueId();
 
 
-
-    chatContainer.innerHTML += chatStripe(false, data.get('prompt') as string || '');
-
-
-    form.reset();
-    chatContainer.scrollTop = chatContainer.scrollHeight;
-    //bot's chatstripe
+  //user's chatstripe
 
 
-    chatContainer.innerHTML += chatStripe(true, '', uniqueId);
 
-    chatContainer.scrollTop = chatContainer.scrollHeight;
+  chatContainer.innerHTML += chatStripe(false, data.get('prompt') as string || '');
 
-    const messageDiv = document.getElementById(uniqueId) as HTMLElement ;
+  form.reset();
 
-    loader(messageDiv);
+  //bot's chatstripe
+  chatContainer.innerHTML += chatStripe(true, '', uniqueId);
 
-    //fetch data from the server
+  chatContainer.scrollTop = chatContainer.scrollHeight;
 
-    const response = await fetch('http://localhost:5000', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        prompt: data.get('prompt')
-      })
+  const messageDiv = document.getElementById(uniqueId) as HTMLElement;
 
+  loader(messageDiv);
+
+  //fetch data from the server
+
+  const response = await fetch('http://localhost:5000', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      prompt: data.get('prompt')
     })
 
-    //clear loading animation
-    clearInterval(loadInterval);
-    messageDiv.innerHTML = '';
-    if (response.ok) {
-      const data = await response.json();
-      const parsedData = data.bot.trim();
+  })
 
-      typeText(messageDiv, parsedData);
-    } else {
-      const err = await response.text();
+  //clear loading animation
+  clearInterval(loadInterval);
+  messageDiv.innerHTML = '';
+  if (response.ok) {
+    const data = await response.json();
+    const parsedData = data.bot.trim();
 
-      messageDiv.innerHTML = 'There was an error';
+    typeText(messageDiv, parsedData);
+  } else {
+    const err = await response.text();
 
-      alert(err);
-    };
+    messageDiv.innerHTML = 'There was an error';
+
+    alert(err);
+
+    chatContainer.scrollTop = chatContainer.scrollHeight;
   };
-  //add event listeners
-  form.addEventListener('submit', (event) => {
+};
+//add event listeners
+form.addEventListener('submit', (event) => {
   handleSubmit(event)
-  });
-  form.addEventListener('keyup', (event) => {
-    if (event.key === 'Enter') {
-      handleSubmit(event);
-    }
-  });
+});
+form.addEventListener('keyup', (event) => {
+  if (event.key === 'Enter') {
+    handleSubmit(event);
+  }
+});
